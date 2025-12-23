@@ -20,15 +20,17 @@
 
 ### Задание 3. Logstash
 
-Установите и запустите Kibana.
+Установите и запустите Logstash и Nginx. С помощью Logstash отправьте access-лог Nginx в Elasticsearch.
 
-Приведите скриншот интерфейса Kibana на странице http://<ip вашего сервера>:5601/app/dev_tools#/console, где будет выполнен запрос GET /_cluster/health?pretty.
+Приведите скриншот интерфейса Kibana, на котором видны логи Nginx.
 
 ![Скриншот-3](https://github.com/garkitt/popov/blob/b6af166780dba90df793aab5719ea08002f01870/img/Les_3.png)
 
 
-### Задание 4. Запись данных в Redis
+### Задание 4. Filebeat
 
-Запишите в Redis несколько ключей с любыми именами и значениями.
+Установите и запустите Filebeat. Переключите поставку логов Nginx с Logstash на Filebeat.
 
-![Скриншот-](https://github.com/garkitt/popov/blob/70d32a70d44b03220e1cbb4d65c00ea2498dcbf2/img/lesson_4.png)
+Приведите скриншот интерфейса Kibana, на котором видны логи Nginx, которые были отправлены через Filebeat.
+
+![Скриншот-4](https://github.com/garkitt/popov/blob/ac210db7c0e7f2f170d0d2a78d1bf3b2c4d56d73/img/Les_4.png)
