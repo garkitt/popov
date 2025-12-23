@@ -10,18 +10,22 @@
 
 ![Скриншот-1](https://github.com/garkitt/popov/blob/7cd720751c5eae868818b6d51a5aa01ac14ec647/img/Les_1.png)
 
-### Задание 2 Memcached
+### Задание 2 Kibana
 
-Установите и запустите memcached.
+УУстановите и запустите Kibana.
 
-![Скриншот-1](https://github.com/garkitt/popov/blob/2a09de06b97084e5c8cde083c9d90e4ae455ca65/img/lesson_2.png)
+Приведите скриншот интерфейса Kibana на странице http://<ip вашего сервера>:5601/app/dev_tools#/console, где будет выполнен запрос GET /_cluster/health?pretty.
 
-### Задание 3. Удаление по TTL в Memcached
-Запишите в memcached несколько ключей с любыми именами и значениями, для которых выставлен TTL 5.
+![Скриншот-2](https://github.com/garkitt/popov/blob/55e0a8a9778870f019451ff913cc45d9c73a633c/img/Les_2.png)
 
-![Скриншот-](https://github.com/garkitt/popov/blob/2e5c96717e1b5d47f464a504988bbc9c759ca922/img/lesson_3.png)
+### Задание 3. Logstash
 
-После 5 секунд данные из кэша удалены.
+Установите и запустите Kibana.
+
+Приведите скриншот интерфейса Kibana на странице http://<ip вашего сервера>:5601/app/dev_tools#/console, где будет выполнен запрос GET /_cluster/health?pretty.
+
+![Скриншот-3](https://github.com/garkitt/popov/blob/b6af166780dba90df793aab5719ea08002f01870/img/Les_3.png)
+
 
 ### Задание 4. Запись данных в Redis
 
