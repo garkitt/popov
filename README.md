@@ -16,7 +16,7 @@
 
 ![Скриншот-3](https://github.com/garkitt/popov/blob/3bc85702362dd49a1825071888fe4f122189133b/img/1-7.png)
 
-Ниже скриншот на котором выполены показаны все действия:
+Ниже скриншот на котором показаны все действия:
 
 ![Скриншот-4](https://github.com/garkitt/popov/blob/3bc85702362dd49a1825071888fe4f122189133b/img/1-8.png)
 
@@ -25,5 +25,6 @@
 ### Задание 2.
 
 Приложил выполненый файл Exel на главной странице.
+
 На скрине ниже запрос
-[Скриншот-5](https://github.com/garkitt/popov/blob/0b08ee44a5777201a55f124ac0379b8108c3c009/img/2.png)
+![Скриншот-5](https://github.com/garkitt/popov/blob/0b08ee44a5777201a55f124ac0379b8108c3c009/img/2.png)
