@@ -1,79 +1,47 @@
-# Домашнее задание к занятию "`Уязвимости и атаки на информационные системы`" - `Попов Игорь`
+# Домашнее задание к занятию "`Защита хоста`" - `Попов Игорь`
 
 ---
 
 ### Задание 1
 
-После атаки на машину  Metasploitable выявил следующее
-![Скриншот-1](https://github.com/garkitt/popov/blob/1a184d9ee1d695723ebf8de13fa3b4b526002003/img/13-01_1.png)
+Добавляем нового пользователя и создаем от его имени файл
 
-1. Разрешенные сетевые службы:
-Сканирование выявило 23 открытых порта, включая критически опасные службы: vsftpd 2.3.4, UnrealIRCd 3.2.8.1, Samba 3.0.20, а также прямой root shell на порту 1524.
+![Скриншот-1](https://github.com/garkitt/popov/blob/51f17fd2930fe12f850c741eda38bd0ca9959ff3/img/encrypt1-1.png)
 
-2. Обнаруженные уязвимости:
-vsftpd 2.3.4 бэкдор (https://www.exploit-db.com/exploits/49757)
-UnrealIRCd 3.2.8.1 бэкдор (https://www.exploit-db.com/exploits/16922)\
-Samba 3.0.20 command injection (https://www.exploit-db.com/exploits/16320)
-Все три уязвимости позволяют получить удаленный доступ к системе без аутентификации.
+Проверям от имени друго пользователя, что не можем прочитать зашифрованные файлы 
+
+![Скриншот-2](https://github.com/garkitt/popov/blob/51f17fd2930fe12f850c741eda38bd0ca9959ff3/img/encrypt1-2.png)
 
 ### Задание 2.
 
-1. SYN Scan (-sS) — «Полуоткрытое» сканирование
-Nmap отправляет TCP-пакет с флагом SYN (флаги: SYN=1, ACK=0). Это имитация начала обычного TCP-соединения.
+Установка пакета
 
-Nmap НЕ завершает тройное рукопожатие. Получив SYN-ACK, он отправляет RST и обрывает соединение.
+![Скриншот-1](https://github.com/garkitt/popov/blob/51f17fd2930fe12f850c741eda38bd0ca9959ff3/img/luks_1.png)
 
-Порт открыт: Сервер отвечает SYN/ACK. Сканер видит это и немедленно отправляет RST, чтобы сбросить соединение.
+Создание файла luks_disk.img
 
-Порт закрыт: Сервер отвечает RST (или RST/ACK) .
+![Скриншот-2](https://github.com/garkitt/popov/blob/51f17fd2930fe12f850c741eda38bd0ca9959ff3/img/luks_2.png)
 
-Порт отфильтрован: Нет ответа (пакет сброшен файерволом) .
+Привязка к устройству /dev/loop16
 
-Это самый быстрый и популярный метод. В Wireshark мы видим пары SYN -> SYN/ACK -> RST для открытых портов.
+![Скриншот-3](https://github.com/garkitt/popov/blob/51f17fd2930fe12f850c741eda38bd0ca9959ff3/img/luks_3.png)
 
-![Скриншот-1](https://github.com/garkitt/popov/blob/a705c2d2ddd1769a97a5c2241776e767d4f24c2f/img/syn.png)
+Выполним шифрование диска
 
-2. FIN Scan (-sF) — «Тихое» сканирование
+![Скриншот-4](https://github.com/garkitt/popov/blob/51f17fd2930fe12f850c741eda38bd0ca9959ff3/img/luks_5.png)
 
-Nmap отправляет TCP-пакет только с флагом FIN. При обычной работе FIN отправляется для закрытия уже установленного соединения, а Nmap отправляет его «на холодную».
+Проверка информации о зашифрованном разделе
 
-Порт открыт: НЕТ ОТВЕТА. Сервер игнорирует пакет (RFC говорит: «drop the segment, and return»).
+![Скриншот-5](https://github.com/garkitt/popov/blob/51f17fd2930fe12f850c741eda38bd0ca9959ff3/img/luks_6.png)
 
-Порт закрыт: Сервер отвечает RST/ACK.
+Открытие раздела (расшифровка)
 
-Порт отфильтрован: Различные ICMP-ошибки (type 3, code 1,2,3,9,10,13) или тишина.
+![Скриншот-6](https://github.com/garkitt/popov/blob/51f17fd2930fe12f850c741eda38bd0ca9959ff3/img/luks_7.png)
 
-![Скриншот-2](https://github.com/garkitt/popov/blob/f1e473c9d74c0eb0c4ec3e4de5a3d144051743b2/img/fin.png)
+Создание файловой системы
 
-3. Xmas Scan (-sX) — «Рождественская елка»
+![Скриншот-7](https://github.com/garkitt/popov/blob/51f17fd2930fe12f850c741eda38bd0ca9959ff3/img/luks_8.png)
 
-Nmap отправляет TCP-пакет с флагами FIN, PSH и URG одновременно. Пакет «светится» как ёлка из-за множества установленных флагов.
+Монтирование и проверка работы раздела
 
-Порт открыт: НЕТ ОТВЕТА (аналогично FIN-сканированию).
-
-Порт закрыт: RST.
-
-Порт отфильтрован: ICMP-недостижимость или тишина.
-
-![Скриншот-3](https://github.com/garkitt/popov/blob/694538ebee4dcb1484c299f7a3fed4edf5082f89/img/xmap.png)
-
-
-4. UDP Scan (-sU) — Самый медленный и «шумный»
-
-С точки зрения трафика (кардинальное отличие от TCP):
-
-Протокол: UDP — connectionless. Нет рукопожатий, флагов, последовательностей SYN/ACK/RST.
-
-Nmap тправляет пустой UDP-пакет (или с полезной нагрузкой для конкретных служб, например, DNS-запрос на порт 53).
-
-Некоторые UDP-сервисы просто игнорируют пустой пакет — тогда Nmap помечает порт как open|filtered.
-
-Порт закрыт: ОБЯЗАТЕЛЬНЫЙ ОТВЕТ. Сервер отправляет ICMP-пакет «Port Unreachable» (type 3, code 3).
-
-Порт отфильтрован: Другие ICMP-ошибки (admin prohibited и т.д.).
-
-Вывод в Wireshark:
-
-Для закрытых портов мы видим UDP -> ICMP Destination Unreachable (Port unreachable). Открытые порты либо молчат, либо шлют ответный UDP.
-
-![Скриншот-4](https://github.com/garkitt/popov/blob/589e7cff23216d408461cddd2393031772c8297b/img/udp.png)
+![Скриншот-8](https://github.com/garkitt/popov/blob/51f17fd2930fe12f850c741eda38bd0ca9959ff3/img/luks_9.png)
