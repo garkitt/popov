@@ -1,0 +1,24 @@
+---
+- name: install_nginx
+  gather_facts: false
+  hosts: webservers
+  vars:
+    ansible_ssh_user: user
+  become: yes
+
+  tasks:
+    - name: update cash
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: install nginx
+      apt:
+        name: nginx
+        state: present
+    
+    - name: start nginx
+      service:
+        name: nginx
+        state: started
+        enabled: yes
