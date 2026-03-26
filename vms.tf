@@ -6,9 +6,9 @@ data "yandex_compute_image" "ubuntu_2204_lts" {
 
 resource "yandex_compute_instance" "bastion" {
   name        = "bastion" #Имя ВМ в облачной консоли
-  hostname    = "bastion" #формирует FDQN имя хоста, без hostname будет сгенрировано случаное имя.
+  hostname    = "bastion"
   platform_id = "standard-v3"
-  zone        = "ru-central1-a" #зона ВМ должна совпадать с зоной subnet!!!
+  zone        = "ru-central1-a"
 
   resources {
     cores         = 2
@@ -32,7 +32,7 @@ resource "yandex_compute_instance" "bastion" {
   scheduling_policy { preemptible = true }
 
   network_interface {
-    subnet_id          = yandex_vpc_subnet.develop_a.id #зона ВМ должна совпадать с зоной subnet!!!
+    subnet_id          = yandex_vpc_subnet.develop_a.id
     nat                = true
     security_group_ids = [yandex_vpc_security_group.LAN.id, yandex_vpc_security_group.bastion.id]
   }
@@ -41,9 +41,9 @@ resource "yandex_compute_instance" "bastion" {
 
 resource "yandex_compute_instance" "web_a" {
   name        = "web-a" #Имя ВМ в облачной консоли
-  hostname    = "web-a" #формирует FDQN имя хоста, без hostname будет сгенрировано случаное имя.
+  hostname    = "web-a"
   platform_id = "standard-v3"
-  zone        = "ru-central1-a" #зона ВМ должна совпадать с зоной subnet!!!
+  zone        = "ru-central1-a"
 
 
   resources {
@@ -76,9 +76,9 @@ resource "yandex_compute_instance" "web_a" {
 
 resource "yandex_compute_instance" "web_b" {
   name        = "web-b" #Имя ВМ в облачной консоли
-  hostname    = "web-b" #формирует FDQN имя хоста, без hostname будет сгенрировано случаное имя.
+  hostname    = "web-b"
   platform_id = "standard-v3"
-  zone        = "ru-central1-b" #зона ВМ должна совпадать с зоной subnet!!!
+  zone        = "ru-central1-b"
 
   resources {
     cores         = var.test.cores
